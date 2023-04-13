@@ -13,6 +13,8 @@
 <a href="login">Login</a>
 <hr>
 <a href="search-product">Busca un producto</a>
+<hr>
+<a href="productos">Lista de productos</a>
 
 
 </body>

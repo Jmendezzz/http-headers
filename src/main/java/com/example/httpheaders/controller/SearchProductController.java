@@ -1,6 +1,8 @@
 package com.example.httpheaders.controller;
 
 import com.example.httpheaders.model.Product;
+import com.example.httpheaders.service.LoginService;
+import com.example.httpheaders.service.LoginServiceImpl;
 import com.example.httpheaders.service.ProductService;
 import com.example.httpheaders.singleton.SingletonProduct;
 import jakarta.servlet.ServletException;
@@ -10,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @WebServlet("/search-product")
@@ -18,6 +21,12 @@ public class SearchProductController extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LoginService loginService = new LoginServiceImpl();
+        Optional<String> username = loginService.getUsername(req);
+        if (username.isEmpty()){
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,"No has iniciado sesión :(");
+            return;
+        }
         getServletContext().getRequestDispatcher("/search-product.jsp").forward(req,resp);
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
