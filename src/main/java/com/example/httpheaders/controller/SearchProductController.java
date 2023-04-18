@@ -22,8 +22,8 @@ public class SearchProductController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LoginService loginService = new LoginServiceImpl();
-        Optional<String> username = loginService.getUsername(req);
-        if (username.isEmpty()){
+        String username =(String) req.getSession().getAttribute("username");
+        if (username == null){
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,"No has iniciado sesión :(");
             return;
         }

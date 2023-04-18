@@ -24,16 +24,11 @@ public class ProductController extends HttpServlet {
     private final ProductService service = SingletonProduct.getProductService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        LoginService loginService = new LoginServiceImpl();
-        Optional<String> username= loginService.getUsername(req);
         List<Product> productos = service.listProducts();
         resp.setContentType("text/html;charset=UTF-8");
         String servletPath = req.getServletPath();
         boolean esXls = servletPath.endsWith(".xls");
-        if(!username.isPresent()){
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,"No has iniciado sesión :(");
-            return;
-        }
+
         if (esXls) {
             resp.setContentType("application/vnd.ms-excel");
             resp.setHeader("Content-Disposition",
